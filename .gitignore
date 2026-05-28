@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# STM32 / Embedded
+build/
+Debug/
+Release/
+*.o
+*.d
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+.settings/
+*.uvguix.*
+*.scvd
+
+# ROS2
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors
+*.swp
+*.swo
+.idea/
+.vscode/
