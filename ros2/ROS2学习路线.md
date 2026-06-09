@@ -153,11 +153,16 @@ ROS 本质上是一个**分布式通信框架**，解决机器人各模块之间
 
 - [x] fishbot 项目克隆并编译 ✅
 
-- [ ] 解决 cmd_vel 通信，实现键盘控制（待调试）
+- [x] **turtle_tf2 追踪 demo 完成** ✅ — 用 Hermes `delegate_task` workflow 并行构建 3 个 ROS2 包（broadcaster/listener/bringup），turtle2 成功追踪 turtle1。详见 `~/.hermes/skills/embedded/ros2-turtle-tf2/SKILL.md`
 
-- [ ] 创建 ROS2 工作空间，跑通 SLAM + Navigation2 仿真
+- [x] 解决 cmd_vel 通信 → turtle_tf2 listener 正确发布 `/turtle2/cmd_vel`（TF frame-aware steering）✅
 
-- [ ] 在 Gazebo 仿真中跑通 SLAM + Navigation2
+- [x] Gazebo 插件迁移完成 ✅ — URDF 从 Gazebo Classic 插件迁到 gz-sim (Jazzy)：DiffDrive ✅, Odometry ✅, IMU/Lidar 传感器桥接已配置。fishbot.world 添加了传感器系统插件。
+- [x] slam_toolbox 替代 cartographer ✅ — `fishbot_slam` 包（slam_toolbox online_async + RViz）
+- [x] teleop 键盘控制 ✅ — `fishbot_teleop` 包（termios raw mode）
+- [x] bringup launch + 学习文档 ✅ — `fishbot_bringup` + `SLAM_NAV2_GUIDE.md` (236行)
+- [x] Gazebo 仿真全通 ✅ — URDF 插件迁移 + topic bridge + sensor 数据链路打通。slam_toolbox `/map` 成功发布。
+- [ ] 保存地图 → Navigation2 路径规划并可视化（SaveMap 有 bug，可手动 `ros2 run nav2_map_server map_saver_cli`）
 
 ### 环境配置笔记
 
