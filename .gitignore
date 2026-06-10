@@ -1,32 +1,45 @@
-# macOS
-.DS_Store
-
-# STM32 / Embedded
+# Embedded project build artifacts
 build/
-Debug/
-Release/
 *.o
-*.d
 *.elf
-*.hex
 *.bin
+*.hex
 *.map
 *.lst
-.settings/
-*.uvguix.*
-*.scvd
 
-# ROS2
-build/
-install/
-log/
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archives
+*.zip
+*.rar
+*.7z
+
+# Vendor SDKs (kept for reference, not built)
+vendor/
+激光测距模块/
+【Realplay】*/
+
+# Images (keep out of git for size)
+images/*.jpg
+images/*.png
+
+# Nested git repos (prevent accidental submodule commits)
+**/.git/
+
+# PlatformIO
+.pio/
 
 # Python
 __pycache__/
 *.pyc
-
-# Editors
-*.swp
-*.swo
-.idea/
-.vscode/
+.venv/
