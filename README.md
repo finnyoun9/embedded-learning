@@ -1,6 +1,6 @@
 # Embedded Learning — 嵌入式系统学习与项目展示
 
-> 🎯 **目标**：从扫地机器人测试工程师转型深圳嵌入式工程师（2026年4月）
+> 🎯 **目标**：从扫地机器人测试工程师转型深圳嵌入式工程师（2026年9-10月）
 > 
 > 本仓库记录从 STM32 裸机编程到 ROS2 机器人系统的完整学习路径。
 > 包含实战代码、硬件笔记、传感器驱动、项目文档。
@@ -19,6 +19,7 @@
 | 逻辑分析仪 | 协议调试 (I2C/SPI/UART/CAN) | ✅ 活跃 |
 | DP100 数控电源 | 功耗分析 | ✅ 活跃 |
 | ST-Link V2 | 烧录/调试 | ✅ 活跃 |
+| 无刷电机 + 驱动板 | BLDC 控制学习 + 电机驱动项目 | ✅ 已购入 |
 
 ---
 
@@ -39,7 +40,8 @@ embedded-learning/
 │   ├── STM32扫地机器人学习指南.md
 │   ├── ROS2学习路线.md
 │   ├── RaspberryPi科学上网配置.md
-│   └── 飞书CLI使用笔记.md
+│   ├── 飞书CLI使用笔记.md
+│   └── 无刷电机BLDC学习路径.md — BLDC 电机控制学习路线
 │
 ├── hardware/                    ← 硬件参考（datasheet、引脚图）
 ├── tools/                       ← 工具使用文档（逻辑分析仪、DP100、OpenOCD）
@@ -50,7 +52,9 @@ embedded-learning/
 └── planning/                    ← 学习计划 & 求职调研
     ├── README.md                ← 项目路线图总览
     ├── project-roadmap.md       ← 4 阶段实战项目路线
-    └── shenzhen-job-market.md   ← 深圳嵌入式岗位调研
+    ├── shenzhen-job-market.md   ← 深圳嵌入式岗位调研
+    ├── interview-prep-八股文.md — 嵌入式面试理论体系（C/RTOS/ARM/协议/系统设计）
+    └── cs408-to-embedded-mapping.md — CS 408 知识迁移到嵌入式面试
 ```
 
 ---
@@ -77,6 +81,8 @@ embedded-learning/
 - [ ] 差分驱动底盘 PID 控制
 - [ ] 逻辑分析仪 I2C/SPI 波形分析
 - [ ] DP100 功耗分析
+- [ ] BLDC 电机六步换向控制
+- [ ] 嵌入式面试八股文系统整理
 
 ---
 
@@ -114,8 +120,11 @@ embedded-learning/
 ## 🔗 相关链接
 
 - [GitHub Profile](https://github.com/finnyoun9)
+- [嵌入式面试八股文体系](planning/interview-prep-八股文.md)
+- [CS 408 → 嵌入式知识迁移](planning/cs408-to-embedded-mapping.md)
 - [ROS2 学习路线](ros2/ROS2学习路线.md)
 - [STM32 扫地机器人学习指南](notes/STM32扫地机器人学习指南.md)
+- [BLDC 电机学习路线](notes/无刷电机BLDC学习路径.md)
 - [4 阶段实战项目路线](planning/project-roadmap.md)
 - [深圳嵌入式岗位调研](planning/shenzhen-job-market.md)
 

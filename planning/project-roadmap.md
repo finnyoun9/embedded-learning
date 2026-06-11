@@ -1,5 +1,5 @@
 # Embedded Engineering Project Roadmap
-## Transitioning from TSE (Dreame Robot Vacuums) to Embedded Engineer — Shenzhen, April 2026
+## Transitioning from TSE (Dreame Robot Vacuums) to Embedded Engineer — Shenzhen, September-October 2026
 
 ---
 
@@ -15,6 +15,7 @@
 | VL53L0X ToF Sensor | I2C distance sensing |
 | OV7670 Camera Module | Parallel camera (FIFO buffer recommended) |
 | Misc Sensors | Assumed: temp/humidity, buttons, LEDs, pots |
+| BLDC Motor + Driver Board | Motor control projects, BLDC learning | New (June 2026) |
 
 ### Recommended Purchases (~300-500 RMB total)
 
@@ -26,6 +27,7 @@
 | SN65HVD230 CAN transceiver (x2) | CAN bus Project 4 | 10-20 RMB each |
 | SD card SPI module | Data logging | 5-10 RMB |
 | STM32F103C8 (second unit) | Second CAN node, spare | 15-20 RMB |
+| AS5600 magnetic encoder | BLDC position feedback | 10-15 RMB |
 | OV7670 FIFO buffer module | Easier camera capture | 30-50 RMB |
 
 ---
@@ -335,27 +337,90 @@ Robot vacuums use internal buses (often UART or custom protocols) between module
 
 ---
 
+## Project 5: BLDC Motor Control — From 6-Step to FOC
+### "The Motor Control Arc"
+
+**Difficulty:** Intermediate → Advanced
+**Timeline:** 4-6 weeks (can overlap with Project 3)
+
+### Hardware Used
+- BLDC motor (any small gimbal/drone motor, e.g., 2204/2205 size)
+- BLDC driver board (DRV8313-based or discrete MOSFET bridge)
+- STM32F103C8 (Blue Pill)
+- AS5600 magnetic encoder (optional, for FOC)
+- DP100 power supply
+- Logic analyzer
+
+### What You Build
+
+**Phase 1: 6-Step Trapezoidal Control (2 weeks)**
+- TIM1 advanced timer configured for 6-step commutation with complementary PWM + dead-time
+- Hall sensor reading via EXTI interrupts with commutation lookup table
+- Open-loop speed control (vary PWM duty cycle)
+- Closed-loop speed PID using Hall sensor frequency as feedback
+- Current sensing with ADC + over-current protection
+- Logic analyzer verification of commutation sequence and dead-time
+
+**Phase 2: FOC Introduction (2-4 weeks, optional stretch)**
+- Install SimpleFOC library or ST X-CUBE-MCSDK
+- Add AS5600 magnetic encoder for rotor angle feedback
+- Run basic FOC current/torque control
+- Compare FOC vs 6-step: torque ripple, noise, efficiency
+
+### Key Skills Demonstrated
+
+| Skill | How |
+|-------|-----|
+| **Advanced timer configuration** | TIM1 complementary PWM, break input, dead-time insertion |
+| **Motor commutation** | 6-step sequence, Hall sensor decoding, commutation timing |
+| **PID control** | Speed loop tuning, anti-windup, integral separation |
+| **Current sensing** | ADC sampling synchronized with PWM, over-current protection |
+| **Power electronics basics** | Bootstrap capacitor, shoot-through prevention, MOSFET switching |
+| **FOC concepts** | Clarke/Park transforms, space vector modulation (conceptual) |
+| **Logic analyzer verification** | 6 PWM channels + 3 Hall signals simultaneously |
+
+### Deliverables
+- GitHub repo with BLDC firmware (6-step + PID)
+- Logic analyzer screenshots: 6-phase PWM + Hall signals during commutation
+- Speed step response plot (PID tuning result)
+- Video: motor speed control demo with UART command interface
+- Optional: FOC comparison demo
+
+### Job Mapping
+- Motor control is a HIGH-VALUE skill in Shenzhen:
+  - DJI (drones/gimbals), Dreame/Roborock (robot vacuums), BYD (EV motors)
+  - "熟悉无刷直流电机控制" appears on robotics and automotive JDs
+  - PID tuning experience is directly transferable to any control system role
+  - FOC knowledge signals senior-level ambition
+
+### Bridge to Dreame Experience
+Robot vacuums use BLDC motors for the main suction fan and side brushes. Understanding motor control from the firmware side connects your TSE knowledge of robot behavior to the implementation layer.
+
+---
+
 ## Skill Coverage Matrix
 
-| Skill | Project 1 | Project 2 | Project 3 | Project 4 |
-|-------|:---------:|:---------:|:---------:|:---------:|
-| Bare-metal STM32 | **●** | ○ | ○ | ○ |
-| I2C | **●** | **●** | **●** | **●** |
-| SPI | ○ | **●** | **●** | ○ |
-| UART | **●** | **●** | **●** | ○ |
-| CAN | ○ | ○ | ○ | **●** |
-| DMA | **●** | ○ | **●** | ○ |
-| FreeRTOS | ○ | **●** | **●** | **●** |
-| Motor Control / PID | ○ | ○ | **●** | **●** |
-| Sensor Fusion | ○ | ○ | **●** | ○ |
-| ROS2 | ○ | ○ | **●** | ○ |
-| Linux Embedded | ○ | ○ | **●** | ○ |
-| SLAM / Navigation | ○ | ○ | **●** | ○ |
-| Logic Analyzer | **●** | **●** | **●** | **●** |
-| Power Profiling | **●** | **●** | ○ | ○ |
-| Protocol Design | ○ | ○ | **●** | **●** |
-| System Architecture | ○ | **●** | **●** | **●** |
-| PCB Design (optional) | ○ | **●** | **●** | ○ |
+| Skill | Project 1 | Project 2 | Project 3 | Project 4 | Project 5 |
+|-------|:---------:|:---------:|:---------:|:---------:|:---------:|
+| Bare-metal STM32 | **●** | ○ | ○ | ○ | ○ |
+| I2C | **●** | **●** | **●** | **●** | ○ |
+| SPI | ○ | **●** | **●** | ○ | ○ |
+| UART | **●** | **●** | **●** | ○ | ○ |
+| CAN | ○ | ○ | ○ | **●** | ○ |
+| DMA | **●** | ○ | **●** | ○ | ○ |
+| FreeRTOS | ○ | **●** | **●** | **●** | ○ |
+| Motor Control / PID | ○ | ○ | **●** | **●** | **●** |
+| Advanced Timer / PWM | ○ | ○ | ○ | ○ | **●** |
+| FOC Concepts | ○ | ○ | ○ | ○ | **●** |
+| Sensor Fusion | ○ | ○ | **●** | ○ | ○ |
+| ROS2 | ○ | ○ | **●** | ○ | ○ |
+| Linux Embedded | ○ | ○ | **●** | ○ | ○ |
+| SLAM / Navigation | ○ | ○ | **●** | ○ | ○ |
+| Logic Analyzer | **●** | **●** | **●** | **●** | **●** |
+| Power Profiling | **●** | **●** | ○ | ○ | ○ |
+| Protocol Design | ○ | ○ | **●** | **●** | ○ |
+| System Architecture | ○ | **●** | **●** | **●** | ○ |
+| PCB Design (optional) | ○ | **●** | **●** | ○ | ○ |
 
 **●** = Primary focus  
 ○ = Secondary / practiced
@@ -369,12 +434,25 @@ Week 1-3:   Project 1 (Bare-metal sensor drivers)
 Week 4-7:   Project 2 (FreeRTOS sensor hub)
 Week 8-15:  Project 3 (ROS2 robot) ← overlaps with...
 Week 10-14: Project 4 (CAN bus, can start once you have 2nd STM32)
-Week 15-16: Polish, documentation, portfolio website
+Week 12-17: Project 5 (BLDC motor control, can overlap with Project 3)
+Week 16-18: Polish, documentation, portfolio website
 ```
 
-Total: ~4 months of focused effort. By April 2026, you'll have:
-- 4 GitHub repos demonstrating the exact skills Shenzhen employers want
+**Accelerated Schedule (Targeting September-October 2026):**
+Given the compressed timeline, focus on completing Projects 1-3 as the core portfolio, with Projects 4-5 as valuable additions you can start in parallel:
+
+```
+July 2026:      Project 1 (Bare-metal sensor drivers) — 2-3 weeks
+July-Aug 2026:  Project 2 (FreeRTOS sensor hub) — 3-4 weeks
+Aug-Sep 2026:   Project 3 (ROS2 robot) — 6-8 weeks, your flagship
+Sep-Oct 2026:   Project 4 (CAN bus) + Project 5 (BLDC motor) — overlap, aim for at least Phase 1 of each
+Oct 2026:       Polish, documentation, portfolio website
+```
+
+Total: ~4 months of focused effort. By October 2026, you'll have:
+- 5 GitHub repos demonstrating the exact skills Shenzhen employers want
 - A physical robot you can bring to interviews
+- BLDC motor control demo (high-value for robotics/automotive roles)
 - Deep protocol knowledge verified with a logic analyzer
 - The confidence to say "I don't just test robots — I build them"
 
@@ -384,7 +462,8 @@ Total: ~4 months of focused effort. By April 2026, you'll have:
 
 Once Projects 2-3 are working on breadboard, design a custom PCB:
 - STM32F103 + supporting circuitry
-- TB6612 motor driver integrated
+- TB6612 motor driver integrated (DC motors)
+- BLDC driver integration (DRV8313 or discrete MOSFET bridge — for Project 5)
 - CAN transceiver
 - I2C/SPI/UART breakout headers
 - Power regulation (battery → 5V → 3.3V)
