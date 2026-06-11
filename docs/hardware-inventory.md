@@ -11,7 +11,7 @@
 |---|------|------|----------|
 | 1 | **STM32 江科大全套件** | 含主板 + 各种传感器/模块 + **平衡车项目（带遥控器）** | 🔵 当前主线 |
 | 2 | **Arduino 开发板** | Arduino UNO 或兼容板 | ⚪ 待开始 |
-| 3 | **ESP32 开发板** | WiFi/BLE 双模，适合 IoT | ⚪ 待开始 |
+| 3 | **ESP32 开发板** | WiFi/BLE 双模，适合 IoT。开发环境：VSCode + PlatformIO (Arduino 框架) | 🟢 已上手（blink + 逻辑分析仪） |
 
 **学习顺序**：STM32（裸机 + FreeRTOS）→ Arduino（快速原型）→ ESP32（无线通信）
 
@@ -39,7 +39,40 @@
 
 ---
 
-## 四、传感器 & 外设
+## 四、逻辑分析仪使用指南
+
+**硬件**：24MHz 8CH（Saleae 兼容，CY7C68013A），macOS 通过 `sigrok-cli` + PulseView 使用。
+
+### 快速上手
+
+```bash
+# 1. 检测设备
+sigrok-cli --scan
+# 应显示：fx2lafw - Saleae Logic with 8 channels
+
+# 2. 采集信号（例：CH1/D0 接 ESP32 GPIO2）
+sigrok-cli -d fx2lafw --samples 3M -c samplerate=1M --channels D0 -o capture.sr
+
+# 3. 生成波形图
+sigrok-cli -i capture.sr -O vcd -o capture.vcd
+python3 scripts/view_wave.py capture.vcd capture.png
+
+# 4. 协议解码（在 PulseView 中 File→Open capture.sr → 加解码器）
+```
+
+### 常用协议接线
+
+| 协议 | 通道 | sigrok-cli 参数 |
+|------|------|----------------|
+| I2C | CH1=SCL, CH2=SDA | `-P i2c:scl=1:sda=2` |
+| SPI | CH1=CLK, CH2=MISO, CH3=MOSI, CH4=CS | `-P spi:clk=1:miso=2:mosi=3:cs=4` |
+| UART | CH1=RX | `-P uart:rx=1:baudrate=115200` |
+
+⚠️ **GND 必须接被测电路 GND，否则波形全乱。**
+
+---
+
+## 五、传感器 & 外设
 
 | # | 设备 | 用途 |
 |---|------|------|
@@ -47,7 +80,7 @@
 
 ---
 
-## 五、测量 & 输出
+## 六、测量 & 输出
 
 | # | 设备 | 用途 |
 |---|------|------|
@@ -57,7 +90,7 @@
 
 ---
 
-## 六、接线 & 工具
+## 七、接线 & 工具
 
 | # | 设备 | 用途 |
 |---|------|------|
