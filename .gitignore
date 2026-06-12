@@ -43,3 +43,4 @@ images/*.png
 __pycache__/
 *.pyc
 .venv/
+schematics/rc_filter/~*
