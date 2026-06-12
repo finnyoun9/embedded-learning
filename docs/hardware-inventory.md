@@ -55,7 +55,7 @@ sigrok-cli -d fx2lafw --samples 3M -c samplerate=1M --channels D0 -o capture.sr
 
 # 3. 生成波形图
 sigrok-cli -i capture.sr -O vcd -o capture.vcd
-python3 scripts/view_wave.py capture.vcd capture.png
+python3 simulations/view_wave.py capture.vcd capture.png
 
 # 4. 协议解码（在 PulseView 中 File→Open capture.sr → 加解码器）
 ```
@@ -245,5 +245,6 @@ OV7670 摄像头（图像采集）
 | 日期 | 变更 |
 |------|------|
 | 2026-06-11 | 新增数电/模电实验器件采购清单（¥32）+ 理论→实验→简历映射 |
+| 2026-06-11 | 新建 `simulations/` 目录：RC 滤波、二极管 IV、BJT/运放/LDO 仿真 |
 | 2026-06-11 | 新增文档；新增逻辑分析仪使用指南 + `view_wave.py` 脚本；ESP32 状态更新为已上手 |
 | 2026-06-11 | 初始创建，整理全套外设清单及学习路线 |
