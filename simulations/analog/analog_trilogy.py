@@ -301,8 +301,8 @@ ax.text(0.05, 0.95, apps, transform=ax.transAxes, fontsize=8.5,
         bbox=dict(boxstyle='round', alpha=0.05))
 
 plt.tight_layout(rect=[0, 0, 1, 0.96])
-plt.savefig('/tmp/analog_trilogy.png', dpi=150)
-print('Done -> /tmp/analog_trilogy.png')
+plt.savefig('simulations/analog/images/analog_trilogy.png', dpi=150)
+print('Done -> simulations/analog/images/analog_trilogy.png')
 print(f'\nBJT Amp: Q-point Vce={Vce:.1f}V Ic={Ic*1000:.1f}mA  Av={Av:.1f}x')
 print(f'Op-Amp:  Inverting G={gain_inv:.1f}x  Non-Inv G={gain_noninv:.1f}x')
 print(f'LDO:     Vout={Vout_target}V  Dropout=0.8V  Vref={Vref}V')
